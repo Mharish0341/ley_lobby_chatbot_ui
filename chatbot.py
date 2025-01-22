@@ -12,6 +12,11 @@ from langchain.chains import create_history_aware_retriever
 from langchain_core.prompts import MessagesPlaceholder
 from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
+def load_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+load_css("style.css")
 
 st.header("AI Chatbot")
 
@@ -126,8 +131,9 @@ for message in st.session_state.messages_document:
         
 
 def main():
+    st.markdown('<div class="sidebar">', unsafe_allow_html=True)
     if prompt := st.chat_input("What is up?"):
-        
+        st.markdown('</div>', unsafe_allow_html=True)
         st.chat_message("user").markdown(prompt)
         st.session_state.messages_document.append({"role": "user", "content": prompt})
         

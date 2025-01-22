@@ -1,0 +1,5 @@
+[theme]
+primaryColor = "#000000"
+backgroundColor = "#FFF7F5"
+secondaryBackgroundColor = "#1482FA"
+page_icon="favicon.ico"

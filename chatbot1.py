@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+
 from langchain_community.vectorstores import FAISS
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
@@ -11,7 +12,75 @@ from langchain.chains import create_history_aware_retriever
 from langchain_core.prompts import MessagesPlaceholder
 from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
+def load_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
+load_css("style.css")
+
+
+# Display the navbar
+import base64
+
+
+image_path = "final.png"  
+with open(image_path, "rb") as image_file:
+    encoded_image = base64.b64encode(image_file.read()).decode()
+image_path = "yaali_animal.png"  
+with open(image_path, "rb") as image_file:
+    encoded_image1 = base64.b64encode(image_file.read()).decode()
+
+st.markdown(
+    f"""
+    <style>
+    .navbar {{
+        display: flex;
+        align-items: center;
+        background-color: #FFFFFF;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        width: 100%; 
+        margin: 0; 
+        box-sizing: border-box;
+        position: fixed; 
+        top: 1;
+        left: 0; 
+        z-index: 1000;
+    }}
+    .main-content {{
+        margin-top: 60px; 
+    }}
+    .navbar img.img1 {{
+        height: 70px;
+        margin-right: 10px;
+        margin-left: 340px;
+    }}
+    .navbar img.img2 {{
+        height: 70px;
+        margin-right: 10px;
+        margin-left: 9px;
+    }}
+    .navbar div {{
+        font-family: Arial, sans-serif;
+    }}
+    .title {{
+        font-weight: bold;
+        font-size: 20px;
+        margin: 0;
+    }}
+    .subtitle {{
+        font-size: 14px;
+        margin: 0;
+    }}
+    </style>
+    <div class="navbar">
+        <img class="img1" src="data:image/png;base64,{encoded_image1}" alt="Logo1">
+        <img class="img2" src="data:image/png;base64,{encoded_image}" alt="Logo2">
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+st.markdown('<div class="sidebar">', unsafe_allow_html=True)
 st.sidebar.title("Menu")
 options = [
     "Home",
@@ -22,6 +91,9 @@ options = [
     "Supply Center of the National Health Services System"
 ]
 choice = st.sidebar.selectbox("Choose a section:", options)
+st.markdown('</div>', unsafe_allow_html=True)
+st.markdown('<div class="main-content">', unsafe_allow_html=True)
+
 
 if choice == "Home":
     st.title("Welcome to the AI Chatbot Application")
@@ -166,3 +238,4 @@ if choice != "Home":
                 relevant_docs = get_more_relevant_docs(prompt, top_k=100)
                 for doc in relevant_docs:
                     st.write(doc)
+st.markdown('</div>', unsafe_allow_html=True)
